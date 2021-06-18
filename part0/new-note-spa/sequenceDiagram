@@ -1,0 +1,12 @@
+note over browser:
+browser updates the DOM with new 
+content and renders again
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server:
+server updates data structure
+end note
+
+server-->browser: created
