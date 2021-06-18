@@ -9,4 +9,4 @@ note over server:
 server updates data structure
 end note
 
-server-->browser: created
+server-->browser: HTTP-status 201 (Created)
