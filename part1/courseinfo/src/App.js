@@ -8,8 +8,14 @@ const Header = (props) => {
   );
 }
 
+const Part = (props) => {
+  return (
+    <p>{props.part} {props.exercises}</p>
+  );
+}
+
 const Content = (props) => {
-  const content = props.parts.map(x => <p>{x.part} {x.exercises}</p>);
+  const content = props.parts.map(x => <Part part={x.part} exercises={x.exercises}/>);
   return (
     <>
       {content}
