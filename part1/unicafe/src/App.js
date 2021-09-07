@@ -6,6 +6,12 @@ const Button = (props) => {
   );
 }; 
 
+const Statistics = (props) => {
+  return (
+    <p>{props.text} {props.value}</p>
+  );
+};
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -16,6 +22,22 @@ const App = () => {
     return () => {setFunction(value+1)};
   };
 
+  const sumFeedbacks = () => {
+    return (
+      good + neutral + bad
+    );
+  };
+
+  const averageFeedbacks = () => {
+    const value = sumFeedbacks()==0?0:(good - bad)/sumFeedbacks();
+    return value;
+  }
+
+  const positivePercentFeedbacks = () => {
+    const value = sumFeedbacks()==0?0:good/sumFeedbacks();
+    return value;
+  };
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -24,9 +46,12 @@ const App = () => {
       <Button title="bad" onClick={handleClick(bad,setBad)}></Button>
       
       <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
+      <Statistics text="good" value={good} />
+      <Statistics text="neutral" value={neutral} />
+      <Statistics text="bad" value={bad} />
+      <Statistics text="all" value={sumFeedbacks()} />
+      <Statistics text="average" value={averageFeedbacks()} />
+      <Statistics text="positive" value={`${positivePercentFeedbacks()*100} %`}/>
     </div>
   )
 }
