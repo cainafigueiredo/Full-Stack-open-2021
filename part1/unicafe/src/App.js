@@ -6,17 +6,23 @@ const Button = (props) => {
   );
 }; 
 
+const StatisticLine = (props) => {
+  return (
+    <p>{props.text} {props.value}</p>
+  );
+};
+
 const Statistics = (props) => {
   let value = <p>No feedback given</p>
   if (props.sum != 0) {
     value = 
       <div>
-        <p>good {props.good}</p>
-        <p>neutral {props.neutral}</p>
-        <p>bad {props.bad}</p>
-        <p>all {props.sum}</p>
-        <p>average {props.average}</p>
-        <p>positive {props.posPercent}</p>
+        <StatisticLine text="good" value={props.good}/>
+        <StatisticLine text="neutral" value={props.neutral}/>
+        <StatisticLine text="bad" value={props.bad}/>
+        <StatisticLine text="all" value={props.sum}/>
+        <StatisticLine text="average" value={props.average}/>
+        <StatisticLine text="positive" value={props.posPercent}/>
       </div>;
   };
 
