@@ -8,22 +8,27 @@ const Button = (props) => {
 
 const StatisticLine = (props) => {
   return (
-    <p>{props.text} {props.value}</p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   );
 };
 
 const Statistics = (props) => {
   let value = <p>No feedback given</p>
-  if (props.sum != 0) {
+  if (props.sum !== 0) {
     value = 
-      <div>
+      <table>
+        <tbody>
         <StatisticLine text="good" value={props.good}/>
         <StatisticLine text="neutral" value={props.neutral}/>
         <StatisticLine text="bad" value={props.bad}/>
         <StatisticLine text="all" value={props.sum}/>
         <StatisticLine text="average" value={props.average}/>
         <StatisticLine text="positive" value={props.posPercent}/>
-      </div>;
+        </tbody>
+      </table>;
   };
 
   return value;
