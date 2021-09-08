@@ -1,5 +1,15 @@
 import React, { useState } from 'react'
 
+const AnecdoteElem = (props) => {
+  return (
+    <div>
+      <h2>{props.title}</h2>
+      {props.anecdote}<br/>
+      has {props.votes} votes
+    </div>
+  );
+}
+
 const App = () => {
   const [anecdotes, setAnecdote] = useState([
     ['If it hurts, do it more often',0],
@@ -9,29 +19,37 @@ const App = () => {
     ['Premature optimization is the root of all evil.',0],
     ['Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',0],
     ['Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients',0]
-  ])
+  ]);
    
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(0);
+
+  const [mostVoted, setMostVoted] = useState(0);
 
   const nextAnecdote = () => {
     const randSelected = Math.floor(Math.random()*anecdotes.length);
     setSelected(randSelected);
   };
 
-  const voteAnectdote = () => {
+  const voteAnecdote = () => {
     const new_anecdotes = [...anecdotes];
     new_anecdotes[selected][1] += 1;
     setAnecdote(new_anecdotes);
+
+    // Updating most voted anecdote
+    if (anecdotes[selected][1] > anecdotes[mostVoted][1]) {
+      setMostVoted(selected);
+    }
   };
 
   return (
     <div>
-      {anecdotes[selected][0]}<br/>
-      has {anecdotes[selected][1]}
+      <AnecdoteElem title="Anecdote of the day" anecdote={anecdotes[selected][0]} votes={anecdotes[selected][1]} />
       <div>
-        <button onClick={voteAnectdote}>vote</button>
+        <button onClick={voteAnecdote}>vote</button>
         <button onClick={nextAnecdote}>next anecdote</button>
       </div>
+
+      <AnecdoteElem title="Anecdote with most votes" anecdote={anecdotes[mostVoted][0]} votes={anecdotes[mostVoted][1]} />
     </div>
   )
 }
