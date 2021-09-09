@@ -10,20 +10,28 @@ const Country = ({country}) => {
 
       <h2>languages</h2>
       <ul>
-        {country.languages.map(lang => <li>{lang.name}</li>)}
+        {country.languages.map(lang => <li key={lang.name}>{lang.name}</li>)}
       </ul>
-      <img src={country.flag} width="200px"/>
+      <img src={country.flag} width="200px" alt="country's flag"/>
     </div>
   );
 }
 
-const CountriesList = ({countries}) => {
+const CountriesList = ({countries, onShowClick}) => {
   return (
     <div>
       {
-        countries.length > 10?
-          <p>Too many matches, specify another filter</p> :
-          countries.map(country => <p>{country.name}</p>)
+        countries.length > 10 ?
+          <div>
+            Too many matches, specify another filter
+          </div> :
+          countries.map(country => {
+            return (
+              <div key={country.name}>
+                {country.name} <button onClick={onShowClick(country.name)}>show</button>
+              </div>
+            )
+          })
       }
     </div>
   );
@@ -43,6 +51,11 @@ const App = () => {
     setFilter(event.target.value);
   } 
 
+  const handleShowClick = (countryName) => {
+    const handler = () => {setFilter(countryName)};
+    return handler;
+  }
+
   const countriesToShow = filter === '' ? 
     countries : 
     countries.filter(country => country.name.toLowerCase().includes(`${filter.toLowerCase()}`));
@@ -53,8 +66,8 @@ const App = () => {
       <div>
         {
           countriesToShow.length === 1 ?
-            <Country country={countriesToShow[0]}/> :
-            <CountriesList countries={countriesToShow}/>
+            <Country country={countriesToShow[0]} /> :
+            <CountriesList countries={countriesToShow} onShowClick={handleShowClick} />
         }
       </div>
     </div>
